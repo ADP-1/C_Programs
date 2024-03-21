@@ -29,16 +29,13 @@ void EnQueue(int *Q, int *rear, int *front, int data) {
         return;
     }
     
-    if (*rear == MAX){
-        *rear = 0;
-        if (*front == 0) {
-            *front = 1;
-        }
-    }
-
-    else if(*rear == -1 && *front == -1){
+    if(*rear == -1 && *front == -1){
         (*front) = 0;
         (*rear)  = 0;
+    }
+
+    else if (*rear == MAX){
+        *rear = 0;
     }
     
     else{
@@ -56,7 +53,6 @@ void DeQueue(int *Q, int *rear, int *front) {
         return ;
     }
     int item = Q[*front]; 
-    
     if (*front == MAX) {
         (*front) = 0;
     }
