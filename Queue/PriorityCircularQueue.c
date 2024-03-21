@@ -1,10 +1,53 @@
 #include <stdio.h>
+#include <stdlib.h>
 #define MAX 10
 
 struct item {
     int Data;
     int Prior;
 };
+
+void traverse(struct item *Q, int rear, int front);
+void Enqueue(struct item *Q, int *rear, int *front ,int data , int priority);
+void DeQueue(struct item *Q, int *rear, int *front);
+
+int main() {
+    struct item Q[MAX];
+    int front = -1;
+    int rear = -1;
+    int choice;
+    int data, priority;
+
+    while(1){
+        printf("\nPriority Queue Operations:\n");
+        printf("1. Enqueue\n");
+        printf("2. Dequeue\n");
+        printf("3. Traverse\n");
+        printf("4. Exit\n");
+        printf("Enter your choice: ");
+        scanf("%d", &choice);
+
+        switch (choice) {
+            case 1:
+                printf("Enter data and priority to enqueue: ");
+                scanf("%d %d", &data, &priority);
+                Enqueue(Q, &rear, &front, data, priority);
+                break;
+            case 2:
+                DeQueue(Q, &rear, &front);
+                break;
+            case 3:
+                traverse(Q, rear, front);
+                break;
+            case 4:
+                printf("Exiting the program.\n");
+                exit(0);
+            default:
+                printf("Invalid choice! Please enter a valid choice.\n");
+        }
+    }
+    return 0;
+}
 
 void traverse(struct item *Q, int rear, int front) {
     if (front == -1 && rear == -1  ) {
@@ -46,6 +89,7 @@ void Enqueue(struct item *Q, int *rear, int *front ,int data , int priority){
     }
     
     // locating position of insertion
+
     int idx = *rear;
     while(idx > *front && priority < Q[(idx - 1 + MAX) % MAX].Prior){
         Q[idx] = Q[(idx - 1 + MAX) % MAX];
@@ -57,17 +101,23 @@ void Enqueue(struct item *Q, int *rear, int *front ,int data , int priority){
     printf("\n");
 }
 
-int main(){
-    struct item Q[MAX];
-    int front = -1;
-    int rear = -1;
-    traverse(Q, rear , front);
-    Enqueue(Q , &rear ,&front , 5 , 1);
-    traverse(Q, rear , front);
-    Enqueue(Q , &rear ,&front , 99 , 5);
-    traverse(Q, rear , front);
-    Enqueue(Q , &rear ,&front , 67 , 2);
+void DeQueue(struct item *Q, int *rear, int *front){
+    if ((*front) == -1 && (*rear) == -1  ) {
+        printf("\n UnderFlow \n");
+        return ;
+    }
+    int item = Q[*front].Data; 
+    if (*front == MAX - 1) {
+        (*front) = 0;
+    }
 
-    traverse(Q, rear , front);
-    return 0;
+    else if (*front == *rear) {
+        (*front) = -1;
+        (*rear) = -1;
+    }
+    else {
+        (*front)++;
+    }
+    
+    printf("\n Deleted element -> %d \n", item);
 }
