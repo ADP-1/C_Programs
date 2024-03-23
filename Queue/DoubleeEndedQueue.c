@@ -36,34 +36,45 @@ void traverse(int *Q, int rear, int front) {
 }
 
 void EnQueueRear(int *Q, int *rear, int *front, int data) {
-    if (isFull(*front, *rear)==1) {
-        printf("\n OverFlow \n");
+    if (isFull(*front, *rear) == 1) {
+        printf("\n Overflow \n");
         return;
     }
+
+    // If the rear pointer is at the end of the circular array, wrap around
     if (*rear == MAX - 1)
         *rear = 0;
+    // If the queue is initially empty, set both front and rear pointers to 0
+    else if (*rear == -1 && *front == -1)
+        *front = *rear = 0;
+    // Move rear pointer to the next position
+    else
+        (*rear)++;
 
-    else if(*rear == -1 && *front == -1) *front=*rear = 0;
-    
-    else (*rear)+=1;
-    
+    // Insert the data into the queue at the rear position
     Q[*rear] = data;
 }
 
 void EnQueueFront(int *Q, int *rear, int *front, int data) {
     if (isFull(*front, *rear) == 1) {
-        printf("\n OverFlow \n");
+        printf("\n Overflow \n");
         return;
     }
-    if (*front == 0 && *rear != MAX-1)
-        *front = MAX-1 ;
 
-    else if(*rear == -1 && *front == -1) *front=*rear = 0;
-    
-    else (*front)-=1;
-    
+    // If the front pointer is at the beginning of array and rear is not at the end.
+    if (*front == 0 && *rear != MAX - 1)
+        *front = MAX - 1;
+    // If the queue is initially empty, set both front and rear pointers to 0
+    else if (*rear == -1 && *front == -1)
+        *front = *rear = 0;
+    // Move front pointer to the previous position
+    else
+        (*front)--;
+
+    // Insert the data into the queue at the front position
     Q[*front] = data;
 }
+
 
 void DeQueueFront(int *Q, int *rear, int *front) {
     int element;
