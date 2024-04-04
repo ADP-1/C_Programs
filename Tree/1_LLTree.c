@@ -39,16 +39,77 @@ void PostOrderTraversal(struct node* root){
     }
 }
 
+
+void Traversal(struct node* root){
+    if (root != NULL) {
+        printf(" %d ", root->data);
+        Traversal(root->left);
+        printf(" %d ", root->data);
+        Traversal(root->right);
+        printf(" %d ", root->data);
+    }
+}
+
+void addNode(struct node **root , int data){
+    struct node *ptr = *root;
+    if(*root == NULL){
+        *root = ptr;
+        ptr = CreateNode(data);
+        return;
+    }
+
+}
+
+struct node *Search(struct node *root , int data){
+    if (root == NULL) return NULL;
+    if(root->data == data) return root;
+    else if(root->data > data ) return Search(root->left , data);
+    else return Search(root->right , data); 
+}
+
+void addBSTnode(struct node** root, int data) {
+    struct node* newNode = CreateNode(data);
+    if (*root == NULL) {
+        *root = newNode;
+        return;
+    }
+
+    struct node* ptr = *root;
+    struct node* parent = NULL;
+
+    while (ptr != NULL) {
+        parent = ptr;
+        if (ptr->data > data) {
+            ptr = ptr->left;
+        } else if (ptr->data == data) {
+            printf("It's a Duplicate Element\n");
+            free(newNode); // Free the unused node
+            return;
+        } else {
+            ptr = ptr->right;
+        }
+    }
+
+    if (parent->data > data) {
+        parent->left = newNode;
+    } else {
+        parent->right = newNode;
+    }
+}
+
+
+void delNode(struct node **root , int data);
+
 int main(){
     
-    struct node* n0 = CreateNode(1);
-        struct node* n11 = CreateNode(2);
-            struct node* n21 = CreateNode(4);
-            struct node* n22 = CreateNode(5);
+    struct node* n0 = CreateNode(55);
+        struct node* n11 = CreateNode(25);
+            struct node* n21 = CreateNode(20);
+            struct node* n22 = CreateNode(30);
 
-        struct node* n12 = CreateNode(3);
-            struct node* n23 = CreateNode(6);
-            struct node* n24 = CreateNode(7);
+        struct node* n12 = CreateNode(75);
+            struct node* n23 = CreateNode(70);
+            struct node* n24 = CreateNode(80);
 
     n0->left = n11;
         n11->left = n21;
@@ -63,6 +124,8 @@ int main(){
     InOrederTraversal(n0);
     printf("\nPostOrderTraversal: \n");
     PostOrderTraversal(n0);
+
+    
 
     return 0;
 }
