@@ -98,34 +98,69 @@ void addBSTnode(struct node** root, int data) {
 }
 
 
-void delNode(struct node **root , int data);
+void deleteNode(struct node** root, int data) {
+    
+    if(*root == NULL) return; // Node not found
+
+    if(data < (*root)->data){
+        deleteNode(&((*root)->left), data);
+    } 
+    else if(data > (*root)->data){
+        deleteNode(&((*root)->right), data);
+    } 
+    else{ // Node with data found
+        if ((*root)->left == NULL){
+            struct node* temp = (*root)->right;
+            free(*root);
+            *root = temp;
+        } 
+        else if ((*root)->right == NULL){
+            struct node* temp = (*root)->left;
+            free(*root);
+            *root = temp;
+        }
+        else{
+            // Node with two children
+            // code remaining
+            return;
+        }
+    }
+}
+
 
 int main(){
     
-    struct node* n0 = CreateNode(55);
-        struct node* n11 = CreateNode(25);
-            struct node* n21 = CreateNode(20);
-            struct node* n22 = CreateNode(30);
+    // struct node* n0 = CreateNode(55);
+    //     struct node* n11 = CreateNode(25);
+    //         struct node* n21 = CreateNode(20);
+    //         struct node* n22 = CreateNode(30);
 
-        struct node* n12 = CreateNode(75);
-            struct node* n23 = CreateNode(70);
-            struct node* n24 = CreateNode(80);
+    //     struct node* n12 = CreateNode(75);
+    //         struct node* n23 = CreateNode(70);
+    //         struct node* n24 = CreateNode(80);
 
-    n0->left = n11;
-        n11->left = n21;
-        n11->right = n22;  
-    n0->right = n12;
-        n12->left = n23;
-        n12->right = n24;
-    
+    // n0->left = n11;
+    //     n11->left = n21;
+    //     n11->right = n22;  
+    // n0->right = n12;
+    //     n12->left = n23;
+    //     n12->right = n24;
+
+    struct node *root = CreateNode(55);
+    addBSTnode(&root , 25);
+    addBSTnode(&root , 20);
+    addBSTnode(&root , 75);
+    addBSTnode(&root , 80);
+    addBSTnode(&root , 30);
+    addBSTnode(&root , 70);
+
+
     printf("PreOrderTraversal: \n");
-    PreOrderTraversal(n0);
+    PreOrderTraversal(root);
     printf("\nInOrderTraversal: \n");
-    InOrederTraversal(n0);
+    InOrederTraversal(root);
     printf("\nPostOrderTraversal: \n");
-    PostOrderTraversal(n0);
-
-    
+    PostOrderTraversal(root);
 
     return 0;
 }
