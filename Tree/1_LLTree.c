@@ -97,32 +97,44 @@ void addBSTnode(struct node** root, int data) {
     }
 }
 
+struct node* findMinNode(struct node* node) {
+    struct node* current = node;
+    while (current && current->left != NULL) {
+        current = current->left;
+    }
+    return current;
+}
 
 void deleteNode(struct node** root, int data) {
-    
-    if(*root == NULL) return; // Node not found
+    if (*root == NULL) {
+        return;
+    }
 
-    if(data < (*root)->data){
+    if (data < (*root)->data){
         deleteNode(&((*root)->left), data);
     } 
-    else if(data > (*root)->data){
+    else if (data > (*root)->data) {
         deleteNode(&((*root)->right), data);
     } 
-    else{ // Node with data found
+    else {
+        // Case1: with no node or one node
         if ((*root)->left == NULL){
-            struct node* temp = (*root)->right;
-            free(*root);
-            *root = temp;
-        } 
-        else if ((*root)->right == NULL){
-            struct node* temp = (*root)->left;
-            free(*root);
-            *root = temp;
+            struct node* temp = *root;
+            *root = (*root)->right;
+            free(temp);
+        } else if ((*root)->right == NULL) {
+            struct node* temp = *root;
+            *root = (*root)->left;
+            free(temp);
         }
-        else{
-            // Node with two children
-            // code remaining
-            return;
+        // Case 2:Node with two child
+        else {
+            // Find smallest node in the right subtree
+            struct node* temp = findMinNode((*root)->right);
+            //Copy the inorder successor data.
+            (*root)->data = temp->data;
+            // Delete the inorder successor
+            deleteNode(&((*root)->right), temp->data);
         }
     }
 }
@@ -155,12 +167,15 @@ int main(){
     addBSTnode(&root , 70);
 
 
-    printf("PreOrderTraversal: \n");
-    PreOrderTraversal(root);
-    printf("\nInOrderTraversal: \n");
+    // printf("PreOrderTraversal: \n");
+    // PreOrderTraversal(root);
+    // printf("\nInOrderTraversal: \n");
+    // InOrederTraversal(root);
+    // printf("\nPostOrderTraversal: \n");
+    // PostOrderTraversal(root);
+    deleteNode(&root , 80);
     InOrederTraversal(root);
-    printf("\nPostOrderTraversal: \n");
-    PostOrderTraversal(root);
+
 
     return 0;
 }
