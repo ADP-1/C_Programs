@@ -105,6 +105,7 @@ struct node* findMinNode(struct node* node) {
     return current;
 }
 
+
 void deleteNode(struct node** root, int data) {
     if (*root == NULL) {
         return;
@@ -158,13 +159,23 @@ int main(){
     //     n12->left = n23;
     //     n12->right = n24;
 
-    struct node *root = CreateNode(55);
-    addBSTnode(&root , 25);
-    addBSTnode(&root , 20);
-    addBSTnode(&root , 75);
-    addBSTnode(&root , 80);
-    addBSTnode(&root , 30);
-    addBSTnode(&root , 70);
+    struct node *root = CreateNode(10);
+    addBSTnode(&root , 5);
+    addBSTnode(&root , 3);
+    addBSTnode(&root , 2);
+    addBSTnode(&root , 4);
+    addBSTnode(&root , 7);
+    addBSTnode(&root , 6);
+    addBSTnode(&root , 8);
+    addBSTnode(&root , 9);
+    addBSTnode(&root , 15);
+    addBSTnode(&root , 12);
+    addBSTnode(&root , 11);
+    addBSTnode(&root , 13);
+    addBSTnode(&root , 14);
+    addBSTnode(&root , 18);
+    addBSTnode(&root , 17);
+    addBSTnode(&root , 19);
 
 
     // printf("PreOrderTraversal: \n");
@@ -173,7 +184,7 @@ int main(){
     // InOrederTraversal(root);
     // printf("\nPostOrderTraversal: \n");
     // PostOrderTraversal(root);
-    deleteNode(&root , 80);
+    deleteNode(&root , 15);
     InOrederTraversal(root);
 
 
