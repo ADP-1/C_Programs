@@ -18,60 +18,60 @@ int isFull(struct node *top);
 void printMenu();
 
 
-int main(){
-    printf("Enter the size of the stack: ");
-    scanf("%d", &MAX);
-    struct node *top = createNode();
-    top->data = 0;
-    top->link = NULL;
+// int main(){
+//     printf("Enter the size of the stack: ");
+//     scanf("%d", &MAX);
+//     struct node *top = createNode();
+//     top->data = 0;
+//     top->link = NULL;
 
-    int choice;
-    int item;
+//     int choice;
+//     int item;
 
-    while (1) {
-        printMenu();
-        printf("Enter your choice: ");
-        scanf("%d", &choice);
+//     while (1) {
+//         printMenu();
+//         printf("Enter your choice: ");
+//         scanf("%d", &choice);
 
-        switch (choice) {
-            case 1:
-                printf("Enter item to push: ");
-                scanf("%d", &item);
-                push(&top, item);
-                break;
+//         switch (choice) {
+//             case 1:
+//                 printf("Enter item to push: ");
+//                 scanf("%d", &item);
+//                 push(&top, item);
+//                 break;
 
-            case 2:
-                item = pop(&top);
-                if (item != -1) printf("Popped item: %d\n", item);
-                break;
+//             case 2:
+//                 item = pop(&top);
+//                 if (item != -1) printf("Popped item: %d\n", item);
+//                 break;
 
-            case 3:
-                item = peek(&top);
-                if (item != -1) printf("Peeked item: %d\n", item);
-                break;
+//             case 3:
+//                 item = peek(&top);
+//                 if (item != -1) printf("Peeked item: %d\n", item);
+//                 break;
 
-            case 4:
-                display(top);
-                break;
+//             case 4:
+//                 display(top);
+//                 break;
 
-            case 5:
-                printf("Is Empty: %s\n", isEmpty(top) ? "Yes" : "No");
-                break;
+//             case 5:
+//                 printf("Is Empty: %s\n", isEmpty(top) ? "Yes" : "No");
+//                 break;
 
-            case 6:
-                printf("Is Full: %s\n", isFull(top) ? "Yes" : "No");
-                break;
+//             case 6:
+//                 printf("Is Full: %s\n", isFull(top) ? "Yes" : "No");
+//                 break;
 
-            case 7:
-                printf("Exiting the program.\n");
-                exit(0);
+//             case 7:
+//                 printf("Exiting the program.\n");
+//                 exit(0);
 
-            default:
-                printf("Invalid choice. Please enter a valid option.\n");
-        }
-    }
-    return 0;
-}
+//             default:
+//                 printf("Invalid choice. Please enter a valid option.\n");
+//         }
+//     }
+//     return 0;
+// }
 
 
 struct node *createNode(){

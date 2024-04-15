@@ -1,7 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-// Print the Linked List
 void traversing(int *DATA, int *LINK, int START)
 {
     int PTR = START;
@@ -10,7 +9,7 @@ void traversing(int *DATA, int *LINK, int START)
         printf("%d -> ", DATA[PTR]);
         PTR = LINK[PTR];
     }
-    printf("NULL");
+    printf("NULL\n");
 }
 
 void countLink(int *DATA, int *LINK, int START)
@@ -22,7 +21,7 @@ void countLink(int *DATA, int *LINK, int START)
         COUNT++;
         ptr = LINK[ptr];
     }
-    printf("No of Nodes are: %d\n", COUNT);
+    printf("Number of Nodes: %d\n", COUNT);
 }
 
 int search(int *DATA, int *LINK, int START, int ITEM)
@@ -46,7 +45,7 @@ void insertSpecific(int *DATA, int *LINK, int *START, int *AVAIL, int Item, int 
     int ptr = *START;
     int count = 1;
 
-    while (count != Pos - 1 && ptr != -1)
+    while (count < Pos - 1 && ptr != -1)
     {
         ptr = LINK[ptr];
         count++;
@@ -103,7 +102,7 @@ void delete_Specific(int *Data, int *Link, int *Start, int *Avail, int loc, int 
 {
     if (*Start == -1)
     {
-        printf("UnderFlow");
+        printf("UnderFlow\n");
         return;
     }
 
@@ -124,7 +123,7 @@ void del_First(int *Data, int *Link, int *Start, int *Avail)
 {
     if (*Start == -1)
     {
-        printf("UnderFlow");
+        printf("UnderFlow\n");
         return;
     }
     int ptr = *Start;
@@ -159,24 +158,17 @@ void del_Last(int *Data, int *Link, int *Start, int *Avail)
 void del_item(int *Data, int *Link, int *Start, int *Avail, int Item)
 {
     int ploc = -1;
-    int loc = -1;
+    int loc = *Start;
     int ptr = *Start;
 
-    while (ptr != -1)
+    while (ptr != -1 && Data[ptr] != Item)
     {
-        if (Data[ptr] == Item)
-        {
-            loc = ptr;
-            break;
-        }
-        else
-        {
-            ploc = ptr;
-            ptr = Link[ptr];
-        }
+        ploc = loc;
+        loc = Link[loc];
+        ptr = loc;
     }
 
-    if (loc == -1)
+    if (ptr == -1)
     {
         printf("Item not found in the linked list\n");
         return;
@@ -207,75 +199,64 @@ int main()
     int choice, item, pos;
     while (1)
     {
-        printf("\n\n1.Display \n2.Count Nodes \n3.Search \n4.Insert At Beginning \n5.Insert At Last \n6.Insert At Specific. \n7.Delete the First Node \n8.Delete the End Node \n9.Delete Specific Node \n10.Delete Node By its Data\n11.EXIT\n");
-        printf("Enter Your Choice :");
+        printf("\n\n1. Display\n2. Count Nodes\n3. Search\n4. Insert At Beginning\n5. Insert At End\n6. Insert At Specific Position\n7. Delete the First Node\n8. Delete the Last Node\n9. Delete Specific Node\n10. Delete Node By its Data\n11. EXIT\n");
+        printf("Enter Your Choice: ");
         scanf("%d", &choice);
 
         switch (choice)
         {
         case 1:
             traversing(DATA, LINK, start);
-            printf("\n");
             break;
 
         case 2:
             countLink(DATA, LINK, start);
-            printf("\n");
             break;
 
         case 3:
-            printf("Enter the value to be Searched : ");
+            printf("Enter the value to be Searched: ");
             scanf("%d", &item);
             search(DATA, LINK, start, item);
-            printf("\n");
             break;
 
         case 4:
-            printf("Enter the value to Insert at Start : ");
+            printf("Enter the value to Insert at Start: ");
             scanf("%d", &item);
             insert_at_first(DATA, LINK, &start, &Avail, item);
-            printf("\n");
             break;
 
         case 5:
-            printf("Enter the value to Insert at End : ");
+            printf("Enter the value to Insert at End: ");
             scanf("%d", &item);
             insert_at_End(DATA, LINK, &start, &Avail, item);
-            printf("\n");
             break;
 
         case 6:
-            printf("Enter the position of node to insert : ");
+            printf("Enter the position of node to insert: ");
             scanf("%d", &pos);
-            printf("\n");
-            printf("Enter the Data to insert in node : ");
+            printf("Enter the Data to insert in node: ");
             scanf("%d", &item);
             insertSpecific(DATA, LINK, &start, &Avail, item, pos);
-            printf("\n");
             break;
 
         case 7:
             del_First(DATA, LINK, &start, &Avail);
-            printf("\n");
             break;
 
         case 8:
             del_Last(DATA, LINK, &start, &Avail);
-            printf("\n");
             break;
 
         case 9:
-            printf("Enter the position of node : ");
+            printf("Enter the position of node: ");
             scanf("%d", &pos);
             delete_Specific(DATA, LINK, &start, &Avail, pos, -1);
-            printf("\n");
             break;
 
         case 10:
-            printf("Enter the Node's Item : ");
+            printf("Enter the Node's Item: ");
             scanf("%d", &item);
             del_item(DATA, LINK, &start, &Avail, item);
-            printf("\n");
             break;
 
         case 11:
@@ -287,41 +268,6 @@ int main()
             break;
         }
     }
-
-    // // For Traverse and print the whole Linked List
-    // traversing(DATA,LINK,START);
-
-    // // For Searching
-    // int searchResult = search(DATA, LINK, START, 80);
-    // if (searchResult != -1){
-    //     printf("\nItem 80 found at position %d\n", searchResult);
-    // }
-    // else{
-    //     printf("\nItem 80 not found in the linked list\n");
-    // }
-
-    // // Inserting A node in it.
-    // printf("\nBefore Insertion:\n");
-    // traversing(DATA, LINK, START);
-
-    // insertSpecific(DATA, LINK, &START, &AVAIL, 50, 3);
-
-    // printf("\nAfter Insertion:\n");
-    // traversing(DATA, LINK, START);
-
-    // // Counting the Nodes
-    // int nodeCount = countLink(DATA, LINK, START);
-    // printf("\nNumber of nodes in the linked list: %d\n", nodeCount);
-
-    // printf("\nBefore Inserting node at front and end:\n");
-    // traversing(DATA, LINK, START);
-    // // insertion at the first
-    // insert_at_first(DATA ,LINK , &START ,&AVAIL,2);
-    // // insertion at the End
-    // insert_at_End(DATA, LINK, &START, &AVAIL, 66);
-
-    // printf("\nAfter Inserting :\n");
-    // traversing(DATA, LINK, START);
 
     return 0;
 }

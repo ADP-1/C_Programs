@@ -250,8 +250,3 @@ int main() {
 
     return 0;
 }
-
-
-void travese(struct node *start);
-int countNodes(struct node *start);
-void insert_begining(struct node **start ,struct node **end, int item);
