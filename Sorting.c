@@ -29,8 +29,7 @@ int bubblesort( int *a , int n){
     }
 }
 
-void selectionsort(int *a, int n)
-{
+void selectionsort(int *a, int n){
     printf("Running Selection Sort.............\n");
     int i , j , min;
     for ( i = 0; i < n -1 ; i++){
