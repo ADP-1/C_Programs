@@ -15,8 +15,8 @@ struct node* CreateNode(int data){
     return newNode;
 }
 
-void PreOrderTraversal(struct node* root) {
-    if (root != NULL) {
+void PreOrderTraversal(struct node* root){
+    if (root != NULL){
         printf(" %d ", root->data);
         PreOrderTraversal(root->left);
         PreOrderTraversal(root->right);
@@ -24,7 +24,7 @@ void PreOrderTraversal(struct node* root) {
 }
 
 void InOrederTraversal(struct node* root){
-    if (root != NULL) {
+    if (root != NULL){
         InOrederTraversal(root->left);
         printf(" %d ", root->data);
         InOrederTraversal(root->right);
@@ -32,7 +32,7 @@ void InOrederTraversal(struct node* root){
 }
 
 void PostOrderTraversal(struct node* root){
-    if (root != NULL) {
+    if (root != NULL){
         PostOrderTraversal(root->left);
         PostOrderTraversal(root->right);
         printf(" %d ", root->data);
@@ -41,7 +41,7 @@ void PostOrderTraversal(struct node* root){
 
 
 void Traversal(struct node* root){
-    if (root != NULL) {
+    if (root != NULL){
         printf(" %d ", root->data);
         Traversal(root->left);
         printf(" %d ", root->data);
@@ -67,9 +67,9 @@ struct node *Search(struct node *root , int data){
     else return Search(root->right , data); 
 }
 
-void addBSTnode(struct node** root, int data) {
+void addBSTnode(struct node** root, int data){
     struct node* newNode = CreateNode(data);
-    if (*root == NULL) {
+    if (*root == NULL){
         *root = newNode;
         return;
     }
@@ -77,11 +77,11 @@ void addBSTnode(struct node** root, int data) {
     struct node* ptr = *root;
     struct node* parent = NULL;
 
-    while (ptr != NULL) {
+    while (ptr != NULL){
         parent = ptr;
-        if (ptr->data > data) {
+        if (ptr->data > data){
             ptr = ptr->left;
-        } else if (ptr->data == data) {
+        } else if (ptr->data == data){
             printf("It's a Duplicate Element\n");
             free(newNode); // Free the unused node
             return;
@@ -90,51 +90,59 @@ void addBSTnode(struct node** root, int data) {
         }
     }
 
-    if (parent->data > data) {
+    if (parent->data > data){
         parent->left = newNode;
     } else {
         parent->right = newNode;
     }
 }
 
-struct node* findMinNode(struct node* node) {
-    struct node* current = node;
-    while (current && current->left != NULL) {
+struct node* findMinNode(struct node** node){
+    struct node* current = *node;
+    struct node* parent = NULL;
+
+    while (current && current->left != NULL){
+        parent = current;
         current = current->left;
     }
+
+    if (parent && current->right != NULL){
+        parent->left = current->right; // Reconnect parent's left pointer
+    }
+
     return current;
 }
 
-
-void deleteNode(struct node** root, int data) {
-    if (*root == NULL) {
-        return;
+void deleteNode(struct node** root, int data){
+    if (*root == NULL){
+        return; // Base case: Tree is empty or node not found
     }
 
     if (data < (*root)->data){
         deleteNode(&((*root)->left), data);
     } 
-    else if (data > (*root)->data) {
-        deleteNode(&((*root)->right), data);
+    else if (data > (*root)->data){
+        deleteNode(&((*root)->right), data); 
     } 
-    else {
-        // Case1: with no node or one node
+    else {// Node Found which we have to delete
+
+        // Case 1: Node with no or one child
         if ((*root)->left == NULL){
             struct node* temp = *root;
-            *root = (*root)->right;
-            free(temp);
-        } else if ((*root)->right == NULL) {
+            *root = (*root)->right; // Update root to the right child (or NULL if no child)
+            free(temp); // Free memory of the node to be deleted
+        } 
+        else if ((*root)->right == NULL){
             struct node* temp = *root;
-            *root = (*root)->left;
-            free(temp);
-        }
-        // Case 2:Node with two child
+            *root = (*root)->left; // Update root to the left child
+            free(temp); // Free memory of the node to be deleted
+        } 
         else {
-            // Find smallest node in the right subtree
-            struct node* temp = findMinNode((*root)->right);
-            //Copy the inorder successor data.
+            // Case 2: Node with two children
+            // Find the inorder successor (smallest node in the right subtree)
+            struct node* temp = findMinNode(&((*root)->right));
+            // Copy the inorder successor's data to the current node
             (*root)->data = temp->data;
-            // Delete the inorder successor
             deleteNode(&((*root)->right), temp->data);
         }
     }
@@ -184,6 +192,7 @@ int main(){
     // InOrederTraversal(root);
     // printf("\nPostOrderTraversal: \n");
     // PostOrderTraversal(root);
+    // InOrederTraversal(root);
     deleteNode(&root , 15);
     InOrederTraversal(root);
 
