@@ -1,35 +1,36 @@
 #include <stdio.h>
+#include <math.h>
 #include <string.h>
-#define MAX_STRING_LENGTH 9 
 
+void squareroot(float num){
+    float root;
+    printf("Enter the number : ");
+    scanf("%f",&num);
 
-void fizzBuzz(int n, char result[][MAX_STRING_LENGTH]) {
-    for (int i = 1; i <= n; ++i) {
-        char s[MAX_STRING_LENGTH] = ""; 
-        
-        if (i % 3 == 0)
-            strcat(s, "Fizz");
-        if (i % 5 == 0)
-            strcat(s, "Buzz");
-        
-        if (strlen(s) == 0) {
-            sprintf(s, "%d", i); 
-        }
-        
-        strcpy(result[i - 1], s); 
+    root = sqrt(num);
+
+    printf("The Sqrt of %f is %.3f .", num , root);
+}
+
+// Program to compare two strings
+
+void compstr() {
+    char a[100], b[100];
+
+    printf("Enter the first string: ");
+    scanf("%99s", a); // Reads up to 99 characters or until a whitespace
+    printf("\nEnter the second string: ");
+    scanf("%99s", b); // Reads up to 99 characters or until a whitespace
+
+    if(strcmp(a, b) == 0){
+        printf("\nStrings are Equal.\n");
+    }
+    else{
+        printf("Strings are different.\n");
     }
 }
 
 int main() {
-    int n = 15;
-    char result[15][MAX_STRING_LENGTH];
-
-    fizzBuzz(n, result);
-    
-
-    for (int i = 0; i < n; ++i) {
-        printf("%s\n", result[i]);
-    }
-
+    compstr();
     return 0;
 }
